@@ -120,7 +120,11 @@ public class PlaylistModel {
         }
 
         public Builder withTags(List<String> tagsToUse) {
-            this.tags = tagsToUse;
+            if(tagsToUse.size() == 0){
+                this.tags = null;
+            }else {
+                this.tags = tagsToUse;
+            }
             return this;
         }
 

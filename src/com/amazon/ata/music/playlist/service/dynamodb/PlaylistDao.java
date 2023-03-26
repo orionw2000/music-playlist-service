@@ -35,4 +35,8 @@ public class PlaylistDao {
 
         return playlist;
     }
+
+    public void savePlaylist(Playlist playlist){
+        dynamoDbMapper.save(playlist);
+    }
 }
