@@ -3,7 +3,7 @@ package com.amazon.ata.music.playlist.service.activity;
 import com.amazon.ata.aws.dynamodb.DynamoDbClientProvider;
 import com.amazon.ata.music.playlist.service.converters.ModelConverter;
 import com.amazon.ata.music.playlist.service.dynamodb.models.Playlist;
-import com.amazon.ata.music.playlist.service.exceptions.InvalidAttributeValueException;
+import com.amazon.ata.music.playlist.service.exceptions.InvalidAttributeException;
 import com.amazon.ata.music.playlist.service.models.requests.CreatePlaylistRequest;
 import com.amazon.ata.music.playlist.service.models.results.CreatePlaylistResult;
 import com.amazon.ata.music.playlist.service.models.PlaylistModel;
@@ -20,7 +20,6 @@ import org.apache.logging.log4j.Logger;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -62,7 +61,7 @@ public class CreatePlaylistActivity implements RequestHandler<CreatePlaylistRequ
         if(!MusicPlaylistServiceUtils.isValidString(createPlaylistRequest.getName()) || createPlaylistRequest.getCustomerId().contains("\"")
                 || createPlaylistRequest.getCustomerId().contains("'")
                 || createPlaylistRequest.getCustomerId().contains("\\")){
-            throw new InvalidAttributeValueException();
+            throw new InvalidAttributeException();
         }
         String newPlaylistId = MusicPlaylistServiceUtils.generatePlaylistId();
         Playlist playlist = new Playlist();
