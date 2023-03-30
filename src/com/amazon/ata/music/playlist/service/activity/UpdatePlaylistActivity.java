@@ -29,11 +29,7 @@ import java.util.Objects;
 public class UpdatePlaylistActivity implements RequestHandler<UpdatePlaylistRequest, UpdatePlaylistResult> {
     private final Logger log = LogManager.getLogger();
     private final PlaylistDao playlistDao;
-    public UpdatePlaylistActivity(){
 
-        DynamoDBMapper mapper = new DynamoDBMapper(DynamoDbClientProvider.getDynamoDBClient(Regions.US_WEST_1));
-        playlistDao = new PlaylistDao(mapper);
-    }
 
     /**
      * Instantiates a new UpdatePlaylistActivity object.
