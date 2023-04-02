@@ -32,6 +32,10 @@ public class AddSongToPlaylistActivity implements RequestHandler<AddSongToPlayli
     private final Logger log = LogManager.getLogger();
     private final PlaylistDao playlistDao;
     private final AlbumTrackDao albumTrackDao;
+   // public AddSongToPlaylistActivity(){
+   //     playlistDao = new PlaylistDao(new DynamoDBMapper(DynamoDbClientProvider.getDynamoDBClient(Regions.US_WEST_1)));
+   //     albumTrackDao = new AlbumTrackDao(new DynamoDBMapper(DynamoDbClientProvider.getDynamoDBClient(Regions.US_WEST_1)));
+   // }
 
     /**
      * Instantiates a new AddSongToPlaylistActivity object.

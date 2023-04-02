@@ -30,6 +30,7 @@ import java.util.Set;
 public class CreatePlaylistActivity implements RequestHandler<CreatePlaylistRequest, CreatePlaylistResult> {
     private final Logger log = LogManager.getLogger();
     private final PlaylistDao playlistDao;
+   // public CreatePlaylistActivity(){playlistDao = new PlaylistDao(new DynamoDBMapper(DynamoDbClientProvider.getDynamoDBClient(Regions.US_WEST_1)));}
 
     /**
      * Instantiates a new CreatePlaylistActivity object.

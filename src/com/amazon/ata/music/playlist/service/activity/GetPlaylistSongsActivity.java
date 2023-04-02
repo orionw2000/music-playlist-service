@@ -30,6 +30,7 @@ public class GetPlaylistSongsActivity implements RequestHandler<GetPlaylistSongs
     private final Logger log = LogManager.getLogger();
     private final PlaylistDao playlistDao;
 
+   // public GetPlaylistSongsActivity(){playlistDao = new PlaylistDao(new DynamoDBMapper(DynamoDbClientProvider.getDynamoDBClient(Regions.US_WEST_1)));}
 
     /**
      * Instantiates a new GetPlaylistSongsActivity object.

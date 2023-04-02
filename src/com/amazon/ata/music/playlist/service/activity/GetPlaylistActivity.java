@@ -26,6 +26,7 @@ public class GetPlaylistActivity implements RequestHandler<GetPlaylistRequest, G
     private final Logger log = LogManager.getLogger();
     private final PlaylistDao playlistDao;
 
+   // public GetPlaylistActivity(){playlistDao = new PlaylistDao(new DynamoDBMapper(DynamoDbClientProvider.getDynamoDBClient(Regions.US_WEST_1)));}
 
     /**
      * Instantiates a new GetPlaylistActivity object.
