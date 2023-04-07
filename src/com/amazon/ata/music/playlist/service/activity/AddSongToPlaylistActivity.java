@@ -21,6 +21,7 @@ import org.apache.logging.log4j.Logger;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -32,10 +33,10 @@ public class AddSongToPlaylistActivity implements RequestHandler<AddSongToPlayli
     private final Logger log = LogManager.getLogger();
     private final PlaylistDao playlistDao;
     private final AlbumTrackDao albumTrackDao;
-   // public AddSongToPlaylistActivity(){
-   //     playlistDao = new PlaylistDao(new DynamoDBMapper(DynamoDbClientProvider.getDynamoDBClient(Regions.US_WEST_1)));
-   //     albumTrackDao = new AlbumTrackDao(new DynamoDBMapper(DynamoDbClientProvider.getDynamoDBClient(Regions.US_WEST_1)));
-   // }
+    public AddSongToPlaylistActivity(){
+        playlistDao = new PlaylistDao(new DynamoDBMapper(DynamoDbClientProvider.getDynamoDBClient(Regions.US_WEST_1)));
+        albumTrackDao = new AlbumTrackDao(new DynamoDBMapper(DynamoDbClientProvider.getDynamoDBClient(Regions.US_WEST_1)));
+    }
 
     /**
      * Instantiates a new AddSongToPlaylistActivity object.
@@ -70,14 +71,16 @@ public class AddSongToPlaylistActivity implements RequestHandler<AddSongToPlayli
         Playlist playlist = playlistDao.getPlaylist(addSongToPlaylistRequest.getId());
         AlbumTrack track = albumTrackDao.getAlbumTrack(addSongToPlaylistRequest.getAsin(), addSongToPlaylistRequest.getTrackNumber());
         boolean isNextQueue = addSongToPlaylistRequest.isQueueNext();
-        List<AlbumTrack> tracks = playlist.getSongList();
+        LinkedList<AlbumTrack> tracks = (LinkedList<AlbumTrack>) playlist.getSongList();
+
         if(!isNextQueue){
             tracks.add(track);
         }else {
             //CHANGE THIS FOR ADDING TO THE FRONT OF THE LIST
-            tracks.add(track);
+            tracks.addFirst(track);
         }
         playlist.setSongList(tracks);
+        playlist.setSongCount(playlist.getSongCount()+1);
         List<SongModel> songModelList = new ArrayList<>();
         ModelConverter modelConverter = new ModelConverter();
         for(AlbumTrack track2 : tracks){

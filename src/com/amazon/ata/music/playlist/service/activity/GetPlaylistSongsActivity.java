@@ -4,6 +4,7 @@ import com.amazon.ata.aws.dynamodb.DynamoDbClientProvider;
 import com.amazon.ata.music.playlist.service.converters.ModelConverter;
 import com.amazon.ata.music.playlist.service.dynamodb.models.AlbumTrack;
 import com.amazon.ata.music.playlist.service.dynamodb.models.Playlist;
+import com.amazon.ata.music.playlist.service.models.SongOrder;
 import com.amazon.ata.music.playlist.service.models.requests.GetPlaylistSongsRequest;
 import com.amazon.ata.music.playlist.service.models.results.GetPlaylistSongsResult;
 import com.amazon.ata.music.playlist.service.models.SongModel;
@@ -30,7 +31,7 @@ public class GetPlaylistSongsActivity implements RequestHandler<GetPlaylistSongs
     private final Logger log = LogManager.getLogger();
     private final PlaylistDao playlistDao;
 
-   // public GetPlaylistSongsActivity(){playlistDao = new PlaylistDao(new DynamoDBMapper(DynamoDbClientProvider.getDynamoDBClient(Regions.US_WEST_1)));}
+    public GetPlaylistSongsActivity(){playlistDao = new PlaylistDao(new DynamoDBMapper(DynamoDbClientProvider.getDynamoDBClient(Regions.US_WEST_1)));}
 
     /**
      * Instantiates a new GetPlaylistSongsActivity object.
@@ -60,6 +61,20 @@ public class GetPlaylistSongsActivity implements RequestHandler<GetPlaylistSongs
         ModelConverter modelConverter = new ModelConverter();
         for(AlbumTrack track : playlist.getSongList()) {
             models.add(modelConverter.toSongModel(track));
+        }
+        SongOrder order = getPlaylistSongsRequest.getOrder();
+        if(order == null) {
+            order = SongOrder.DEFAULT;
+        }
+        switch(order){
+            case REVERSED:
+                Collections.reverse(models);
+                break;
+            case SHUFFLED:
+                Collections.shuffle(models);
+                break;
+            case DEFAULT:
+                break;
         }
         return GetPlaylistSongsResult.builder()
                 .withSongList(models)
