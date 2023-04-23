@@ -12,7 +12,6 @@ import javax.inject.Inject;
  */
 public class PlaylistDao {
     private final DynamoDBMapper dynamoDbMapper;
-
     /**
      * Instantiates a PlaylistDao object.
      *
